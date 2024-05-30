@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="calculatorApp" ng-controller="CalculatorController as ctrl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator App</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      margin-top: 50px;
+    }
+
+    /*.navbar {
+      background-color: #7d9885; 
+    } */
+    form {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+    }
+    .navbar.navbar-light.bg-light {
+      background-color: #e9ead8 !important;
+    }
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    input[type="number"] {
+      width: calc(100% - 22px);
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button[type="button"] {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button[type="button"]:hover {
+      background-color: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .home-page {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 70vh;
+    }
+    .image-container {
+  max-width: 60%;
+  margin: auto;
+  text-align: center;
+ }
+.text-center{
+  background-color: #e9ead8;
+}
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block; /* Ensures the image is centered */
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Angular App</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a ng-click="ctrl.currentPage = 'home'" class="nav-item nav-link" href="#">Home</a>
+        <a ng-click="ctrl.currentPage = 'calculator'" class="nav-item nav-link" href="#">Calculator</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div ng-show="ctrl.currentPage === 'home'" class="home-page">
+      <div class="image-container">
+        <img src="./image3.png" alt="Centered Image">
+      </div>
+    </div>
+    <div ng-show="ctrl.currentPage === 'calculator'">
+      <form>
+        <div class="form-group">
+          <label for="number1">Number 1:</label>
+          <input type="number" class="form-control" ng-model="ctrl.number1" required>
+        </div>
+        <div class="form-group">
+          <label for="number2">Number 2:</label>
+          <input type="number" class="form-control" ng-model="ctrl.number2" required>
+        </div>
+        <div class="form-group">
+          <label for="operation">Operation:</label>
+          <select class="form-control" ng-model="ctrl.operation">
+            <option value="add">Add</option>
+            <option value="subtract">Subtract</option>
+            <option value="multiply">Multiply</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="ctrl.calculate()">Compute</button>
+      </form>
+      <div ng-show="ctrl.result !== undefined" class="result">
+        <label>Result:</label>
+        <span>{{ ctrl.result }}</span>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center mt-5" style="height: 100px;">
+    <div style="line-height: 2;"> <!-- Adjust line-height as needed -->
+        © Ruby Poudel, {{ ctrl.currentYear }} <br>
+           </div>
+</footer>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script>
+    angular.module('calculatorApp', [])
+      .controller('CalculatorController', ['$window', function($window) {
+        var ctrl = this;
+
+        ctrl.currentPage = 'home';
+        ctrl.number1 = null;
+        ctrl.number2 = null;
+        ctrl.operation = null;
+        ctrl.result = null;
+
+        ctrl.currentYear = new Date().getFullYear();
+
+        ctrl.calculate = function() {
+          switch (ctrl.operation) {
+            case 'add':
+              ctrl.result = ctrl.number1 + ctrl.number2;
+              break;
+            case 'subtract':
+              ctrl.result = ctrl.number1 - ctrl.number2;
+              break;
+            case 'multiply':
+              ctrl.result = ctrl.number1 * ctrl.number2;
+              break;
+            default:
+              ctrl.result = null;
+          }
+        };
+      }]);
+  </script>
+</body>
+</html>
